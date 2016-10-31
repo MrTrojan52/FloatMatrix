@@ -282,6 +282,36 @@ FloatMatrix FloatMatrix::operator^=(const int c)
 	return *this^c;
 }
 
+std::istream &operator>>(std::istream &input, FloatMatrix &B)
+{
+	cout << endl << "Your matrix is " << B._rows << " x " << B._columns << endl;
+	cout << "Enter " << B._rows * B._columns << " numbers" << endl;
+	for (int i = 0; i < B._rows; i++)
+	{
+		for (int j = 0; j < B._columns; j++)
+		{
+			cout << endl << "M[" << i << "][" << j << "] = ";
+			input >> B.M[i][j];
+		}
+		
+	}
+	return input;
+}
+
+std::ostream &operator<<(std::ostream &output, const FloatMatrix &B)
+{
+	output << endl;
+	for (int i = 0; i < B._rows; i++)
+	{
+		for (int j = 0; j < B._columns; j++)
+		{
+			output << setw(5) << B.M[i][j];
+		}
+		output << endl;
+	}
+	return output;
+}
+
 FloatMatrix FloatMatrix::transpose()
 {
 	FloatMatrix result(_columns, _rows);

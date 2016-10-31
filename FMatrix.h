@@ -1,3 +1,4 @@
+#include <iostream>
 class FloatMatrix
 {
 public:
@@ -22,6 +23,8 @@ public:
 	FloatMatrix	  operator/=(const double);
 	FloatMatrix   operator^(const int);
 	FloatMatrix   operator^=(const int);
+	friend std::istream &operator>>(std::istream &, FloatMatrix &);
+	friend std::ostream &operator<<(std::ostream &, const FloatMatrix &);
 	FloatMatrix	  transpose();
 	FloatMatrix	  SubMatrix(int ,int )const;
 	FloatMatrix	  inverse()const;
@@ -29,6 +32,19 @@ public:
 	bool		  operator==(const FloatMatrix &);
 	bool		  operator!=(const FloatMatrix &);
 	bool		  IsSquare()const;
+	//TODO: Write IsDiagonal function
+	bool		  IsDiagonal()const;
+	//TODO: Write IsNull function
+	bool		  IsNull()const;
+	//TODO: Write IsE function
+	bool		  IsE()const;
+	//TODO: Write IsSymmetric function
+	bool		  IsSymmetric()const;
+	//TODO: Write IsUTriangle function
+	bool		  IsUTriangle()const;
+	//TODO: Write IsDTriangle function
+	bool		  IsDTriangle()const;
+
 	void Print();
 	double Determinant()const;
 	double NormaSqrt();

@@ -25,7 +25,8 @@ int main()
 	//C = C*A;
 	//C.Print();
 	//B.Print();
-	A.Print();
+	cin >> A;
+	cout << A*5;
 	D.Print();
 	printf("\n%f\n", A.Determinant());
 	A = A.SubMatrix(0, 0);
