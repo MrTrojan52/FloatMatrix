@@ -54,6 +54,16 @@ FloatMatrix::FloatMatrix(const FloatMatrix &B)
 	}
 }
 
+int FloatMatrix::get_rows()
+{
+	return _rows;
+}
+
+int FloatMatrix::get_columns()
+{
+	return _columns;
+}
+
 FloatMatrix::~FloatMatrix()
 {
 	for (int i = 0; i < _rows; i++)
@@ -102,6 +112,10 @@ FloatMatrix & FloatMatrix::operator=(const FloatMatrix &B)
 	}
 }
 
+FloatMatrix & FloatMatrix::operator=(const FloatMatrix * B)
+{
+	return *this = *B;
+}
 
 
 FloatMatrix FloatMatrix::operator*(const FloatMatrix &B)const
@@ -123,7 +137,8 @@ FloatMatrix FloatMatrix::operator*(const FloatMatrix &B)const
 	}
 	else
 	{
-		cout << endl << "Multiply is impossible:Matrix have different sizes!" << endl;
+		cout << endl << "Multiply is impossible:Matrix have different sizes!" << endl << "Returned " << _rows <<" x "<< _columns << " null matrix!";
+		return  FloatMatrix(_rows, _columns, 0.0);
 	}
 }
 
@@ -187,7 +202,8 @@ FloatMatrix  FloatMatrix::operator+(const FloatMatrix &B)
 	}
 	else
 	{
-		cout << endl << "Addition is impossible:Matrix have different sizes!" << endl;
+		cout << endl << "Addition is impossible:Matrix have different sizes!" << endl << "Returned " << _rows << " x " << _columns << " null matrix!";
+		return  FloatMatrix(_rows, _columns, 0.0);
 	}
 }
 
@@ -201,7 +217,8 @@ FloatMatrix FloatMatrix::operator-(const FloatMatrix &B)
 	}
 	else
 	{
-		cout << endl << "Substraction is impossible:Matrix have different sizes!" << endl;
+		cout << endl << "Substraction is impossible:Matrix have different sizes!" << endl << "Returned " << _rows << " x " << _columns << " null matrix!";
+		return  FloatMatrix(_rows, _columns, 0.0);
 	}
 }
 
@@ -346,7 +363,17 @@ FloatMatrix FloatMatrix::SubMatrix(int r, int c)const
 				}
 			}
 		}
+		else
+		{
+			cout << "Unable to allocate sub-matrix: Matrix - is not a square!" << endl << "Returned " << _rows << " x " << _columns << " null matrix!";
+			return  FloatMatrix(_rows, _columns, 0.0);
+		}
 		return result;
+	}
+	else
+	{
+		cout << "Unable to allocate sub-matrix: The matrix has a small size!" << endl << "Returned " << _rows << " x " << _columns << " null matrix!";
+		return  FloatMatrix(_rows, _columns, 0.0);
 	}
 
 }
@@ -355,7 +382,7 @@ FloatMatrix FloatMatrix::inverse()const
 {
 	FloatMatrix Minors(_rows, _columns);
 	FloatMatrix result(_rows, _columns);
-	if ((_rows == _columns) &&  (Determinant() != 0))
+	if (IsSquare() &&  (Determinant() != 0))
 	{
 		for (int i = 0; i < _rows; i++)
 		{
@@ -370,9 +397,14 @@ FloatMatrix FloatMatrix::inverse()const
 		result = (1 / Determinant()) * Minors;
 		return result;
 	}
+	else
+	{
+		cout << endl << "Can not find the inverse matrix!"<< endl << "Returned " << _rows << " x " << _columns << " null matrix!";
+		return  FloatMatrix(_rows, _columns, 0.0);
+	}
 }
 
-bool FloatMatrix::operator==(const FloatMatrix &B)
+bool FloatMatrix::operator==(const FloatMatrix &B)const
 {
 	if ((_rows != B._rows) || (_columns != B._columns))
 	{
@@ -395,7 +427,7 @@ bool FloatMatrix::operator==(const FloatMatrix &B)
 	return true;
 }
 
-bool FloatMatrix::operator!=(const FloatMatrix &B)
+bool FloatMatrix::operator!=(const FloatMatrix &B)const
 {
 	return !(*this == B);
 }
@@ -410,6 +442,90 @@ bool FloatMatrix::IsSquare()const
 	{
 		return false;
 	}
+}
+
+bool FloatMatrix::IsDiagonal()
+{
+	if (IsUTriangle() && IsDTriangle())
+	{
+		return true;
+	}
+	else
+	{
+		return false; 
+	}
+}
+
+bool FloatMatrix::IsE()
+{
+	if (IsDiagonal())
+	{
+		for (int i = 0; i < _rows; i++)
+		{
+			if (M[i][i]  != 1)
+				return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+
+bool FloatMatrix::IsNull()const
+{
+	FloatMatrix r(_rows, _columns, 0.0);
+	if (*this == r)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool FloatMatrix::IsSymmetric()
+{
+	if ((*this == transpose()) && IsSquare())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool FloatMatrix::IsUTriangle()const
+{
+
+	if (IsSquare())
+	{
+		for (int i = 0; i < _rows; i++)
+		{
+			for (int j = 0; j < _rows-i ; j++)
+			{
+				if (M[j][i] != 0)
+				{
+					return false;
+
+				}
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true; 
+}
+
+bool FloatMatrix::IsDTriangle()
+{
+	return (*this).transpose().IsUTriangle();
 }
 
 double FloatMatrix::Determinant()const
@@ -435,7 +551,8 @@ double FloatMatrix::Determinant()const
 	}
 	else
 	{
-		cout << endl << "The determinant is not found: The Matrix is not square!" << endl;
+		cout << endl << "The determinant is not found: The Matrix is not square!" << endl << "Returned 0.0!";
+		return 0.0;
 	}
 	
 }

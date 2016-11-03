@@ -5,8 +5,10 @@ public:
 	FloatMatrix(int rows, int columns, double initval);
 	FloatMatrix(int rows, int columns, double *b);
 	FloatMatrix(const FloatMatrix &);
-
+	int get_rows();
+	int get_columns();
 	FloatMatrix & operator=(const FloatMatrix &);
+	FloatMatrix & operator=(const FloatMatrix *);
 	FloatMatrix   operator*(const FloatMatrix &)const;
 	friend FloatMatrix   operator*(const double ,const FloatMatrix &);
 	friend FloatMatrix   operator*(const FloatMatrix &, const double );
@@ -29,21 +31,15 @@ public:
 	FloatMatrix	  SubMatrix(int ,int )const;
 	FloatMatrix	  inverse()const;
 
-	bool		  operator==(const FloatMatrix &);
-	bool		  operator!=(const FloatMatrix &);
+	bool		  operator==(const FloatMatrix &)const;
+	bool		  operator!=(const FloatMatrix &)const;
 	bool		  IsSquare()const;
-	//TODO: Write IsDiagonal function
-	bool		  IsDiagonal()const;
-	//TODO: Write IsNull function
+	bool		  IsDiagonal();
+	bool		  IsE();
 	bool		  IsNull()const;
-	//TODO: Write IsE function
-	bool		  IsE()const;
-	//TODO: Write IsSymmetric function
-	bool		  IsSymmetric()const;
-	//TODO: Write IsUTriangle function
+	bool		  IsSymmetric();
 	bool		  IsUTriangle()const;
-	//TODO: Write IsDTriangle function
-	bool		  IsDTriangle()const;
+	bool		  IsDTriangle();
 
 	void Print();
 	double Determinant()const;
