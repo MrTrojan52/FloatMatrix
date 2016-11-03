@@ -506,9 +506,9 @@ bool FloatMatrix::IsUTriangle()const
 	{
 		for (int i = 0; i < _rows; i++)
 		{
-			for (int j = 0; j < _rows-i ; j++)
+			for (int j = i+1; j < _rows-i ; j++)
 			{
-				if (M[j][i] != 0)
+				if (M[j][i]  != 0)
 				{
 					return false;
 

@@ -15,24 +15,27 @@ int main()
 	A.Print();
 
 	//A = A^2;
-	cout << A.NormaMaxC() << endl;
+	//cout << A.NormaMaxC() << endl;
 	A.Print();
-	double tmp[12] = { 1, 2, 3, 4, 5, 6, 7, 5, 9, 10, 11, 12 };
-	FloatMatrix D(6, 2, tmp);
-	cout << A.Determinant();
+	double tmp[4] = { 1, 2, 3, 4 };
+	FloatMatrix D(2, 2, tmp);
+	//cout << A.Determinant();
 	//FloatMatrix C(3, 3, 1);
 	//D = A*D;
 	//C = C*A;
 	//C.Print();
 	//B.Print();
+	//cout << D;
+	D /= D;
 	
-	
-	cout << A*5;
+	//cout << A*5;
 	A /= A;
-	cout << A;
+	//cout << A;
+
+	cout << D;
 	//A -= A;
 	
-		if (A.IsE())
+		if (D.IsE())
 		{
 			cout << endl << "E";
 		}
@@ -42,11 +45,11 @@ int main()
 		}
 	//printf("\n%f\n", A.Determinant());
 	//A = A.SubMatrix(0, 0);
-	A.Print();
+	//A.Print();
 	//A /= A ;
-	A.Print();
+	//A.Print();
 	//printf("\n%f\n", A.Determinant());
-	D =  2*D;
+	//D =  2*D;
    
 	_getch();
 	
