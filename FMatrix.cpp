@@ -329,7 +329,7 @@ std::ostream &operator<<(std::ostream &output, const FloatMatrix &B)
 	return output;
 }
 
-FloatMatrix FloatMatrix::transpose()
+FloatMatrix FloatMatrix::transpose()const
 {
 	FloatMatrix result(_columns, _rows);
 	for (int i = 0; i < _rows; i++)
@@ -444,7 +444,7 @@ bool FloatMatrix::IsSquare()const
 	}
 }
 
-bool FloatMatrix::IsDiagonal()
+bool FloatMatrix::IsDiagonal()const
 {
 	if (IsUTriangle() && IsDTriangle())
 	{
@@ -456,7 +456,7 @@ bool FloatMatrix::IsDiagonal()
 	}
 }
 
-bool FloatMatrix::IsE()
+bool FloatMatrix::IsE()const
 {
 	if (IsDiagonal())
 	{
@@ -487,9 +487,10 @@ bool FloatMatrix::IsNull()const
 	}
 }
 
-bool FloatMatrix::IsSymmetric()
+bool FloatMatrix::IsSymmetric()const
 {
-	if ((*this == transpose()) && IsSquare())
+	FloatMatrix result(*this);
+	if ((*this == result.transpose()) && IsSquare())
 	{
 		return true;
 	}
@@ -523,9 +524,10 @@ bool FloatMatrix::IsUTriangle()const
 	return true; 
 }
 
-bool FloatMatrix::IsDTriangle()
+bool FloatMatrix::IsDTriangle()const
 {
-	return (*this).transpose().IsUTriangle();
+	FloatMatrix result(*this);
+	return result.transpose().IsUTriangle();
 }
 
 double FloatMatrix::Determinant()const
@@ -557,7 +559,7 @@ double FloatMatrix::Determinant()const
 	
 }
 
-double FloatMatrix::NormaSqrt()
+double FloatMatrix::NormaSqrt()const
 {
 	double res = 0.0;
 	for (int i = 0; i < _rows; i++)
@@ -570,7 +572,7 @@ double FloatMatrix::NormaSqrt()
 	return sqrt(res);
 }
 
-double FloatMatrix::NormaMaxR()
+double FloatMatrix::NormaMaxR()const
 {
 	double max = DBL_MIN;
 	double sum = 0.0;
@@ -587,9 +589,10 @@ double FloatMatrix::NormaMaxR()
 	return max;
 }
 
-double FloatMatrix::NormaMaxC()
+double FloatMatrix::NormaMaxC()const
 {
-	return this->transpose().NormaMaxR();
+	FloatMatrix result(*this);
+	return result.transpose().NormaMaxR();
 }
 
 void FloatMatrix::Print()

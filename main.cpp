@@ -11,12 +11,13 @@ int main()
 	double c[9] = { 1, 2, 3, 4, 5, 6, 7, 10, 9 };
 
 	FloatMatrix A(3, 3, c);
-
-	A.Print();
+	const FloatMatrix B(3, 3, 1.2);
+	//A += B;
+	//A.Print();
 
 	//A = A^2;
 	//cout << A.NormaMaxC() << endl;
-	A.Print();
+	//A.Print();
 	double tmp[4] = { 1, 2, 3, 4 };
 	FloatMatrix D(2, 2, tmp);
 	//cout << A.Determinant();
@@ -25,11 +26,11 @@ int main()
 	//C = C*A;
 	//C.Print();
 	//B.Print();
-	//cout << D;
+	cout << D;
 	D /= D;
 	
 	//cout << A*5;
-	A /= A;
+	//A /= A;
 	//cout << A;
 
 	cout << D;

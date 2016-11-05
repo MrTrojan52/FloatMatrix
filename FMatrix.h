@@ -27,25 +27,25 @@ public:
 	FloatMatrix   operator^=(const int);
 	friend std::istream &operator>>(std::istream &, FloatMatrix &);
 	friend std::ostream &operator<<(std::ostream &, const FloatMatrix &);
-	FloatMatrix	  transpose();
+	FloatMatrix	  transpose()const;
 	FloatMatrix	  SubMatrix(int ,int )const;
 	FloatMatrix	  inverse()const;
 
 	bool		  operator==(const FloatMatrix &)const;
 	bool		  operator!=(const FloatMatrix &)const;
 	bool		  IsSquare()const;
-	bool		  IsDiagonal();
-	bool		  IsE();
+	bool		  IsDiagonal()const;
+	bool		  IsE()const;
 	bool		  IsNull()const;
-	bool		  IsSymmetric();
+	bool		  IsSymmetric()const;
 	bool		  IsUTriangle()const;
-	bool		  IsDTriangle();
+	bool		  IsDTriangle()const;
 
 	void Print();
 	double Determinant()const;
-	double NormaSqrt();
-	double NormaMaxR();
-	double NormaMaxC();
+	double NormaSqrt()const;
+	double NormaMaxR()const;
+	double NormaMaxC()const;
 	~FloatMatrix();
 
 private:
