@@ -1,10 +1,11 @@
 #include "FMatrix.h"
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
-FloatMatrix::FloatMatrix(int r,int c,double initval = 0.0)
+FloatMatrix::FloatMatrix(int r,int c,double initval )
 {
 	_rows = r;
 	_columns = c;
@@ -121,6 +122,11 @@ FloatMatrix & FloatMatrix::operator=(const FloatMatrix * B)
 FloatMatrix FloatMatrix::operator*(const FloatMatrix &B)const
 {
 	FloatMatrix result(_rows, B._columns,0.0);
+	if (!(*this).IsNull() && ((*this).inverse() == B) )
+	{
+		result.SetDiag(1.0);
+		return result;
+	}
 	if (_columns == B._rows)
 	{
 		for (int i = 0; i < _rows; i++)
@@ -299,6 +305,13 @@ FloatMatrix FloatMatrix::operator^=(const int c)
 	return *this^c;
 }
 
+const double * FloatMatrix::operator[](const int i)const
+{
+	return M[i];
+}
+
+
+
 std::istream &operator>>(std::istream &input, FloatMatrix &B)
 {
 	cout << endl << "Your matrix is " << B._rows << " x " << B._columns << endl;
@@ -322,7 +335,7 @@ std::ostream &operator<<(std::ostream &output, const FloatMatrix &B)
 	{
 		for (int j = 0; j < B._columns; j++)
 		{
-			output << setw(5) << B.M[i][j];
+			output << setw(5) << fixed  << B.M[i][j] << " ";
 		}
 		output << endl;
 	}
@@ -394,7 +407,7 @@ FloatMatrix FloatMatrix::inverse()const
 
 		Minors = Minors.transpose();
 
-		result = (1 / Determinant()) * Minors;
+		result = (1 / Determinant())*Minors;
 		return result;
 	}
 	else
@@ -602,9 +615,32 @@ void FloatMatrix::Print()
 	{
 		for (int j = 0; j < _columns; j++)
 		{
-			cout << setw(5) << M[i][j];
+			cout << setw(5) << M[i][j] << " ";
 		}
 		cout << endl;
 	}
 
 }
+
+void FloatMatrix::SetDiag(double k)
+{
+	for (int  i = 0; i < min(_rows,_columns); i++)
+	{
+		M[i][i] = k;
+	}
+}
+
+/*FloatMatrix FloatMatrix::epsRev()
+{
+	for (int i = 0; i < _rows; i++)
+	{
+		for (int j = 0; j < _columns; j++)
+		{
+			if (fabs(M[i][j]) < DBL_EPSILON)
+			{
+				M[i][j] = 0.0;
+			}
+		}
+	}
+	return *this;
+}*/
