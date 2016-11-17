@@ -134,7 +134,13 @@ void info(FloatMatrix &M)
 	cout << "\n------------------------------------------\n";
 	cout << M << endl;
 	cout << "\n------------------------------------------\n";
-	cout << "Determinant = " << M.Determinant() ;
+	cout << "Determinant = " << M.Determinant();
+	cout << "\n------------------------------------------\n";
+	cout << "Norma sqrt = " << M.NormaSqrt();
+	cout << "\n------------------------------------------\n";
+	cout << "Norma by Rows = " << M.NormaMaxR();
+	cout << "\n------------------------------------------\n";
+	cout << "Norma by Columns = " << M.NormaMaxC();
 	cout << "\n------------------------------------------\n";
 	cout << "Transpose matrix \n" << M.transpose();
 	cout << "\n------------------------------------------\n";
